@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_prjects/Home.dart';
+import 'package:flutter_prjects/layouts/Home.dart';
 
-import 'Categories.dart';
+import 'layouts/Categories.dart';
 import 'Login.dart';
 import 'Rigster.dart';
 import 'navigation.dart';
@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
 
       debugShowCheckedModeBanner: false,
       //home:  Rigster(),
-     home:  Login(),
+     //home:  Login(),
       //home:Categories(),
       //home:Home(),
-      //home:Navigation(),
+      home:Navigation(),
     );
   }
 }
