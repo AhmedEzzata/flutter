@@ -1,30 +1,43 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_prjects/layouts/Home.dart';
 
-import 'layouts/Categories.dart';
-import 'Login.dart';
-import 'Rigster.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'cubit/cubit.dart';
+import 'cubit/observer.dart';
+import 'cubit/state.dart';
+import 'layout/sheard/API.dart';
 import 'navigation.dart';
 
+
 void main() {
-  runApp(const MyApp());
+  BlocOverrides.runZoned(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await DioHelper.init();
+    runApp(MyApp());
+  },
+    blocObserver: MyBlocObserver(),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-
-      debugShowCheckedModeBanner: false,
-      //home:  Rigster(),
-     //home:  Login(),
-      //home:Categories(),
-      //home:Home(),
-      home:Navigation(),
+    return BlocProvider(
+      create: (context) => AppCubit()..getCategoriesData(),
+      child: BlocConsumer<AppCubit, AppStates>(
+        listener: (context, state) {},
+        builder: (context, state) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Orange Task',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: HomeScreen(),
+          //home: LoginScreen(),
+        ),
+      ),
     );
   }
 }
-
